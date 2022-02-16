@@ -64,12 +64,7 @@ export class MapContainer extends Component {
     };
   }
   
-  handleDelete = todo => {
-    const tab = this.state.tab.filter((t) => {
-        return t.id !== todo
-    });
-    this.setState({ tab });
-}
+  
 
 
   componentDidMount(){
@@ -183,7 +178,7 @@ onClose = props => {
         </PlacesAutocomplete>
 
 
-                <MarkersList tab = {this.state.tab} delete = {this.handleDelete} />
+                <MarkersList tab = {this.state.tab} />
 
         </div>
 

@@ -1,64 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react'
+import { RiCloseCircleLine } from 'react-icons/ri';
+import { TiEdit } from 'react-icons/ti';
+import Marker from './testMarkers';
 
-import Markers from './testMarkers';
-import MapContainer from './test';
+
+export default function MarkersList(props) {
 
 
-function markersList() {
-
-    const [todos, setTodos] = useState([]);
-
-  const addTodo = todo => {
-    if (!todo.text || /^\s*$/.test(todo.text)) {
-      return;
-    }
-
-    const newTodos = [todo, ...todos];
-
-    setTodos(newTodos);
-    console.log(...todos);
-  };
-
-  const updateTodo = (todoId, newValue) => {
-    if (!newValue.text || /^\s*$/.test(newValue.text)) {
-      return;
-    }
-
-    setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)));
-  };
-
-  const removeTodo = id => {
-    const removedArr = [...todos].filter(todo => todo.id !== id);
-
-    setTodos(removedArr);
-  };
-
-  const completeTodo = id => {
-    let updatedTodos = todos.map(todo => {
-      if (todo.id === id) {
-        todo.isComplete = !todo.isComplete;
-      }
-      return todo;
-    });
-    setTodos(updatedTodos);
-  };
-
-  return (
+    return props.tab.map((todo) => (
     <>
-      <h1>Quelle ville voulez vous ajouter ?</h1>
-      <MapContainer onSubmit={addTodo} />
-      <Markers
-        todos={todos}
-        completeTodo={completeTodo}
-        removeTodo={removeTodo}
-        updateTodo={updateTodo}
-      />
-
-
+        <Marker  data = {todo} 
+        
+        delete={props.delete}
+        />
 
     </>
-    );
-  }
-  
-  export default markersList;
-  
+      )
+
+
+)
+}
