@@ -11,7 +11,8 @@ function TodoForm(props) {
 
   const inputRef = useRef(null);
 
-
+  const handleSelect = async value => {};
+ 
 
   useEffect(() => {
     inputRef.current.focus();
@@ -23,7 +24,6 @@ function TodoForm(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-
     props.onSubmit({
       id: Math.floor(Math.random() * 10000),
       text: input
@@ -55,7 +55,9 @@ function TodoForm(props) {
       <Autocomplete
     apiKey= {API_KEY}
     placeholder='Ajouter une ville'
+    value={input}
     onChange={handleChange}
+    onSelect={handleSelect}
     name='text'
     className='todo-input'
     ref={inputRef}

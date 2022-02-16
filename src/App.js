@@ -1,19 +1,17 @@
 import React from 'react';
 import './App.css';
 import TodoList from './components/TodoList';
-import SimpleMap from './map';
 
+import MapContainer from './components/test'
 function App() {
   return (
 
     <div className="MainContainer">
 
-    <div className='todo-app'>
-      <TodoList />
-    </div>
-    <div className='map'>
-    <SimpleMap></SimpleMap>
-    </div>
+    
+  
+<MapContainer></MapContainer>
+   
 
     </div>
     

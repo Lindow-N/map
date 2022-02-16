@@ -8,11 +8,13 @@
 
 
 .MainContainer{
-  display: flex;
+ 
 
 }
-.map{
- 
+
+#googleMaps{
+  display: flex;
+  
 }
 
 .todo-app {
@@ -24,7 +26,7 @@
   background: #161a2b;
   text-align: center;
   padding-bottom: 32px;
-
+  padding-top: 32px;
 }
 
 h1 {
