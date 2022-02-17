@@ -89,7 +89,7 @@ export class MapContainer extends Component {
         });
       },
       (err) => console.log(err),
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 10000 },
+      { enableHighAccuracy: true, timeout: 100000, maximumAge: 10000 },
       );
     } else {
       //  // No Support Web
@@ -139,7 +139,6 @@ export class MapContainer extends Component {
           position: { lat: this.state.mapCenter.lat, lng: this.state.mapCenter.lng}} //execute the manipulations
           this.setState({tab: newIds}) //set the new state
 
-          this.setState({edit: false, address:""})
 
         }
 
@@ -153,7 +152,7 @@ export class MapContainer extends Component {
              this.setState({address:""})
   
         }
-        
+        this.setState({edit: false, address:""})
 
       })
       .catch(error => console.error('Error', error));
@@ -213,7 +212,7 @@ export class MapContainer extends Component {
           )}
         </PlacesAutocomplete>
 ) : (
-  
+
   <PlacesAutocomplete
   value={this.state.address}
   onChange={this.handleChange}
