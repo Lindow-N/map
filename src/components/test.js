@@ -22,7 +22,8 @@ export class MapContainer extends Component {
     this.state = {
       // for google map places autocomplete
       address: '',
-
+      edit : false,
+      editID : 0,
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
@@ -31,7 +32,7 @@ export class MapContainer extends Component {
       lng: 0,
 
       mapCenter: {
-        lat: 7,
+        lat: 35,
         lng: 7,
         name: ""
       },
@@ -72,6 +73,13 @@ export class MapContainer extends Component {
 }
 
 
+handleEdit = (e) => {
+ 
+   console.log('pl',e);
+this.setState({edit: e.edit , editID:e.id})
+  }
+
+  
   componentDidMount(){
 
     if (!!navigator.geolocation) {
@@ -118,12 +126,32 @@ onClose = props => {
        
         // update center state
         this.setState({ mapCenter: latLng });
-        var id = this.state.tab.length+1;
 
-        var tab = this.state.tab.push({id: id,
-            name: this.state.address ,
-            position: { lat: this.state.mapCenter.lat, lng: this.state.mapCenter.lng}});
-            
+
+        if (this.state.edit){
+
+          const newIds = this.state.tab.slice() //copy the array
+          newIds[this.state.editID-1] = {id: id,
+          name: this.state.address ,
+          position: { lat: this.state.mapCenter.lat, lng: this.state.mapCenter.lng}} //execute the manipulations
+          this.setState({tab: newIds}) //set the new state
+
+          this.setState({edit: false, address:""})
+
+        }
+
+        else {
+          var id = this.state.tab.length+1;
+
+          var tab = this.state.tab.push({id: id,
+              name: this.state.address ,
+              position: { lat: this.state.mapCenter.lat, lng: this.state.mapCenter.lng}});
+              
+             this.setState({address:""})
+  
+        }
+        
+
       })
       .catch(error => console.error('Error', error));
   };
@@ -140,20 +168,22 @@ onClose = props => {
 
 <div className='todo-app'>
       
-     
-        <PlacesAutocomplete
+{this.state.edit ? (<PlacesAutocomplete
           value={this.state.address}
           onChange={this.handleChange}
           onSelect={this.handleSelect}
 
-    
         >
+
+  
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+
+            
             <div>
               <input
                 {...getInputProps({
-                  placeholder: 'Ajouter une ville',
-                  className: 'todo-input',
+                  placeholder: 'Modifier la ville',
+                  className: 'todo-input edit',
                 })}
               />
               <div className="autocomplete-dropdown-container">
@@ -162,7 +192,7 @@ onClose = props => {
                   const className = suggestion.active
                     ? 'suggestion-item--active'
                     : 'suggestion-item';
-                  // inline style for demonstration purpose
+                 
                   const style = suggestion.active
                     ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                     : { backgroundColor: '#161a2b', cursor: 'pointer' , color:'#fff' , padding:'5px 0'};
@@ -181,9 +211,56 @@ onClose = props => {
             </div>
           )}
         </PlacesAutocomplete>
+) : (
+  <PlacesAutocomplete
+  value={this.state.address}
+  onChange={this.handleChange}
+  onSelect={this.handleSelect}
+
+>
 
 
-                <MarkersList tab = {this.state.tab} delete = {this.handleDelete} />
+  {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+
+    
+    <div>
+      <input
+        {...getInputProps({
+          placeholder: 'Ajouter une ville',
+          className: 'todo-input',
+        })}
+      />
+      <div className="autocomplete-dropdown-container">
+        {loading && <div>Loading...</div>}
+        {suggestions.map(suggestion => {
+          const className = suggestion.active
+            ? 'suggestion-item--active'
+            : 'suggestion-item';
+          // inline style for demonstration purpose
+          const style = suggestion.active
+            ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+            : { backgroundColor: '#161a2b', cursor: 'pointer' , color:'#fff' , padding:'5px 0'};
+          return (
+            <div
+              {...getSuggestionItemProps(suggestion, {
+                className,
+                style,
+              })}
+            >
+              <span>{suggestion.description}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  )}
+</PlacesAutocomplete> 
+           
+           )}
+        
+
+
+                <MarkersList tab = {this.state.tab} delete = {this.handleDelete} Edit = {this.handleEdit}/>
 
         </div>
 
@@ -234,3 +311,4 @@ onClose = props => {
 export default GoogleApiWrapper({
   apiKey: ('AIzaSyDE19jz0Ojpx2q-mepUlNKjlH5mUvrkHsM')
 })(MapContainer)
+

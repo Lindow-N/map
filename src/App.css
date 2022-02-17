@@ -27,6 +27,7 @@
   text-align: center;
   padding-bottom: 32px;
   padding-top: 32px;
+  
 }
 
 h1 {
@@ -52,6 +53,7 @@ h1 {
   width: 320px;
   background: transparent;
   color: #fff;
+  margin-bottom: 32px;
 }
 
 .todo-input::placeholder {
