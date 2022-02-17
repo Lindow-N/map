@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import MapContainer from './test';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { TiEdit } from 'react-icons/ti';
 
@@ -8,8 +7,6 @@ export default function Marker(props) {
     
 
 const todo = props.data;
-
-
 
 return (                             
     

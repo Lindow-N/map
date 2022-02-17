@@ -5,8 +5,6 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
-import Markers from './testMarkers';
-
 
 
   const mapStyles = {
@@ -65,6 +63,9 @@ export class MapContainer extends Component {
     };
   }
   
+
+//Suppr et mod task
+
   handleDelete = todo => {
     const tab = this.state.tab.filter((t) => {
         return t.id !== todo
@@ -72,11 +73,9 @@ export class MapContainer extends Component {
     this.setState({ tab });
 }
 
-
-handleEdit = (e) => {
+  handleEdit = (e) => {
  
-   console.log('pl',e);
-this.setState({edit: e.edit , editID:e.id})
+    this.setState({edit: e.edit , editID:e.id})
   }
 
   
@@ -98,6 +97,8 @@ this.setState({edit: e.edit , editID:e.id})
     }
   }
   
+  //Info Marker
+
   onMarkerClick = (props, marker, e) =>
   this.setState({
     selectedPlace: props,
@@ -105,7 +106,7 @@ this.setState({edit: e.edit , editID:e.id})
     showingInfoWindow: true
   });
 
-onClose = props => {
+  onClose = props => {
   if (this.state.showingInfoWindow) {
     this.setState({
       showingInfoWindow: false,
@@ -113,6 +114,8 @@ onClose = props => {
     });
   }
 };
+
+// Autocomplete 
 
   handleChange = address => {
     this.setState({ address });
@@ -173,9 +176,7 @@ onClose = props => {
           onChange={this.handleChange}
           onSelect={this.handleSelect}
 
-        >
-
-  
+                    > 
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
 
             
@@ -212,6 +213,7 @@ onClose = props => {
           )}
         </PlacesAutocomplete>
 ) : (
+  
   <PlacesAutocomplete
   value={this.state.address}
   onChange={this.handleChange}
